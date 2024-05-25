@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image Carousel</title>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+    body {
+        font-family: Arial, sans-serif;
+    }
+    .carousel {
+        position: relative;
+        max-width: 100%;
+        margin: auto;
+        overflow: hidden;
+        border: 2px solid #ddd;
+    }
+    .slides {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+        width: 300%;
+    }
+    .slide {
+        min-width: 100%;
+        transition: opacity 1s;
+    }
+    .slide img {
+        width: 100%;
+        display: block;
+    }
+    .prev, .next {
+        position: absolute;
+        top: 50%;
+        width: auto;
+        padding: 16px;
+        margin-top: -22px;
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+        transition: 0.6s ease;
+        border-radius: 0 3px 3px 0;
+        user-select: none;
+        cursor: pointer;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    .next {
+        right: 0;
+        border-radius: 3px 0 0 3px;
+    }
+    .prev:hover, .next:hover {
+        background-color: rgba(0,0,0,0.8);
+    }
+    .dots {
+        text-align: center;
+        padding: 10px;
+        background: #ddd;
+    }
+    .dot {
+        cursor: pointer;
+        height: 15px;
+        width: 15px;
+        margin: 0 2px;
+        background-color: #bbb;
+        border-radius: 50%;
+        display: inline-block;
+        transition: background-color 0.6s ease;
+    }
+    .active, .dot:hover {
+        background-color: #717171;
+    }
+</style>
+</head>
+<body>
+
+<div class="carousel">
+    <div class="slides">
+        <div class="slide">
+            <img src="image1.jpg" alt="Image 1">
+        </div>
+        <div class="slide">
+            <img src="image2.jpg" alt="Image 2">
+        </div>
+        <div class="slide">
+            <img src="image3.jpg" alt="Image 3">
+        </div>
+    </div>
+    <a class="prev" onclick="moveSlides(-1)">&#10094;</a>
+    <a class="next" onclick="moveSlides(1)">&#10095;</a>
+</div>
+<br>
+
+<div class="dots">
+    <span class="dot" onclick="currentSlide(1)"></span>
+    <span class="dot" onclick="currentSlide(2)"></span>
+    <span class="dot" onclick="currentSlide(3)"></span>
+</div>
+
+<script>
+    let slideIndex = 1;
+    showSlideAtIndex(slideIndex);
+
+    function showSlideAtIndex(n) {
+        let slides = document.querySelectorAll('.slide');
+        let dots = document.querySelectorAll('.dot');
+        if (n > slides.length) {slideIndex = 1}
+        if (n < 1) {slideIndex = slides.length}
+        for (let i = 0; i < slides.length; i++) {
+            slides[i].style.display = 'none';
+        }
+        for (let i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(' active', '');
+        }
+        slides[slideIndex-1].style.display = 'block';
+        dots[slideIndex-1].className += ' active';
+    }
+
+    function moveSlides(n) {
+        showSlideAtIndex(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+        showSlideAtIndex(slideIndex = n);
+    }
+
+    setInterval(function() {
+        moveSlides(1);
+    }, 5000); // Change image every 5 seconds
+</script>
+
+</body>
+</html>
